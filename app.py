@@ -796,10 +796,12 @@ with st.container(border=True):
     if hn and hp:
         kn = [w for t in range(hn["k"]) for w, _ in hn["lda"].show_topic(t, topn=5)]
         kp = [w for t in range(hp["k"]) for w, _ in hp["lda"].show_topic(t, topn=5)]
+        kn_unik = list(dict.fromkeys(kn))
+        kp_unik = list(dict.fromkeys(kp))
         baris_insight = [
             f"Cakupan: {plat_insight} ({total_i:,} ulasan)",
-            f"Sentimen Positif didominasi kata: {', '.join(pd.unique(kp)[:8])}",
-            f"Sentimen Negatif didominasi kata: {', '.join(pd.unique(kn)[:8])}",
+            f"Sentimen Positif didominasi kata: {', '.join(kp_unik[:8]) if kp_unik else '-'}",
+            f"Sentimen Negatif didominasi kata: {', '.join(kn_unik[:8]) if kn_unik else '-'}",
             "Kepuasan pelanggan banyak ditopang aspek pengiriman & sensorik, sedangkan keluhan berpusat pada efikasi inti produk.",
         ]
         st.markdown("\n".join(f"- {b}" for b in baris_insight))
